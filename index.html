@@ -39,6 +39,10 @@
     viewer.setPublicationID("84f1f879");
     viewer.setParentElementID("myViewerContent");
     viewer.show();
+
+    viewer.oncurrentpageschange = function(event) {
+        console.log("WE CHANGED THE PAGES!");
+    }
 // ]]></script>
     <a href="/page2.html">Page 2!</a>
 
