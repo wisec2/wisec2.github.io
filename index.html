@@ -34,16 +34,69 @@
     <!-- <script type="text/javascript" src="https://cas-stage.zma.gs/60da01be15ae551c007b057f/ssr/experiences/617eaea07c6ce01e2aa37320/init.js"></script> -->
     <script type="text/javascript" src="https://secure.api.viewer.zmags.com/viewer/viewer.js"></script>
 <div id="myViewerContent" style="width: 800px; height: 600px;"></div>
-<script>// <![CDATA[
-    var viewer = new com.zmags.api.Viewer();
-    viewer.setPublicationID("84f1f879");
-    viewer.setParentElementID("myViewerContent");
-    viewer.show();
+<script>
 
-    viewer.oncurrentpageschange = function(event) {
-        console.log("PAGES CHANGED", event);
+    var viewer = new com.zmags.api.Viewer();
+    viewer.setPublicationID("e8e1983d");
+    viewer.setParentElementID("myViewerContent");
+	viewer.setFullscreenMode(com.zmags.api.Viewer.FullscreenMode.API_ONLY);
+    viewer.addEventListener(com.zmags.api.Viewer.TOOLBAR_BUTTON_ACTIVATE, toolbarButtonActivateHandler);
+    viewer.show();
+	
+	// This block of code displays the page specified in the URL.
+    var pageturn = false; // Do not alter the hash while pages are still turning.
+    // if(window.location.hash != ""){ viewer.gotoPage(window.location.hash.replace("#","")); }
+    // window.onhashchange = function(event){ if(pageturn == false){ viewer.gotoPage(window.location.hash.replace("#","")); }}
+
+    // This block of code updates the URL when pages are turned.
+    viewer.oncurrentpageschange = function(event){
+        console.log("CURRENT PAGES CHANGED");
+        viewer.getCurrentPages(function(data){
+            // debugger;
+            pageturn = true; // Pages currently turning.
+            window.setTimeout(function(){ pageturn = false; }, 100);
+            // window.location.hash = data.firstPage;
+        });
     }
-// ]]></script>
+	
+    var viewerStyle = "";
+    function toolbarButtonActivateHandler(event){
+        console.log("TOOLBAR ACTIVATED");
+        if (event.buttonID === "fullscreen"){
+            var viewerDiv = document.getElementById("myViewerContent");
+            if(viewerStyle == ""){
+                document.body.style.overflow = "hidden";
+                viewerStyle = viewerDiv.style.cssText;
+                viewerDiv.style.cssText = "position:fixed; top:0px; left:0px; height:100%; width:100%; z-index:9001;";
+            }
+            else{
+                document.body.style.overflow = "auto";
+                viewerDiv.style.cssText = viewerStyle;
+                viewerStyle = "";
+            }
+
+            viewer.resize();
+        }
+    }
+	
+	function launchWebSiteProductWindow(productID){
+		window.__zmags.demandware.quickview.show({url:'/on/demandware.store/Sites-ethanallen-us-Site/en_US/Product-Show?format=ajax&pid='+productID+'&source=quickview', source: "quickview"});
+	}
+    
+    viewer.onproductlinkactivate = function(event){
+        console.log("PRODUCT LINK ACTIVATED");
+        // launchWebSiteProductWindow(event.product.product_id);
+    }
+    viewer.onproductwidgetactivate = function(event){
+        console.log("PRODUCT WIDGET ACTIVATED");
+        // launchWebSiteProductWindow(event.product.product_id);
+    }
+    viewer.onbuythelookwidgetactivate = function(event){
+        // Replace line below with code to launch your web site's buy-the-look window
+        alert("buyTheLookWidgetActivateHandler, event products: " + event.products);
+    }
+
+</script>
     <a href="/page2.html">Page 2!</a>
 
     <script type="text/javascript" src="https://cas-stage.zma.gs/60da01be15ae551c007b057f/ssr/experiences/64500f11e54c792e2747dbd1/init.js"></script>
