@@ -52,7 +52,7 @@
     viewer.oncurrentpageschange = function(event){
         viewer.getCurrentPages(function(data){
             console.log("CURRENT PAGES CHANGED", data);
-            // debugger;
+            debugger;
             pageturn = true; // Pages currently turning.
             window.setTimeout(function(){ pageturn = false; }, 100);
             window.location.hash = data.firstPage;
@@ -79,9 +79,9 @@
         }
     }
 	
-	function launchWebSiteProductWindow(productID){
-		window.__zmags.demandware.quickview.show({url:'/on/demandware.store/Sites-ethanallen-us-Site/en_US/Product-Show?format=ajax&pid='+productID+'&source=quickview', source: "quickview"});
-	}
+	// function launchWebSiteProductWindow(productID){
+	// 	window.__zmags.demandware.quickview.show({url:'/on/demandware.store/Sites-ethanallen-us-Site/en_US/Product-Show?format=ajax&pid='+productID+'&source=quickview', source: "quickview"});
+	// }
     
     viewer.onproductlinkactivate = function(event){
         console.log("PRODUCT LINK ACTIVATED");
