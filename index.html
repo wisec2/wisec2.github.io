@@ -50,9 +50,9 @@
 
     // This block of code updates the URL when pages are turned.
     viewer.oncurrentpageschange = function(event){
+        console.log("CURRENT PAGES CHANGED", event);
         viewer.getCurrentPages(function(data){
-            console.log("CURRENT PAGES CHANGED", data);
-            debugger;
+            // debugger;
             pageturn = true; // Pages currently turning.
             window.setTimeout(function(){ pageturn = false; }, 100);
             window.location.hash = data.firstPage;
