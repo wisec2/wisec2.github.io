@@ -46,18 +46,18 @@
 	
 	// This block of code displays the page specified in the URL.
     var pageturn = false; // Do not alter the hash while pages are still turning.
-    if(window.location.hash != ""){ viewer.gotoPage(window.location.hash.replace("#","")); }
-    window.onhashchange = function(event){ if(pageturn == false){ viewer.gotoPage(window.location.hash.replace("#","")); }}
+    // if(window.location.hash != ""){ viewer.gotoPage(window.location.hash.replace("#","")); }
+    // window.onhashchange = function(event){ if(pageturn == false){ viewer.gotoPage(window.location.hash.replace("#","")); }}
 
     // This block of code updates the URL when pages are turned.
     viewer.oncurrentpageschange = function(event){
         console.log("CURRENT PAGES CHANGED", event);
-        viewer.getCurrentPages(function(data){
-            // debugger;
-            pageturn = true; // Pages currently turning.
-            window.setTimeout(function(){ pageturn = false; }, 100);
-            window.location.hash = data.firstPage;
-        });
+        // viewer.getCurrentPages(function(data){
+        //     // debugger;
+        //     pageturn = true; // Pages currently turning.
+        //     window.setTimeout(function(){ pageturn = false; }, 100);
+        //     window.location.hash = data.firstPage;
+        // });
     }
 	
     var viewerStyle = "";
@@ -85,19 +85,22 @@
 	// }
     
     viewer.onproductlinkactivate = function(event){
-        console.log("PRODUCT LINK ACTIVATED", event);
+        top?.postMessage("pub:productLink");
         // launchWebSiteProductWindow(event.product.product_id);
     }
     viewer.onproductwidgetactivate = function(event){
+        top?.postMessage("pub:productWidget");
         console.log("PRODUCT WIDGET ACTIVATED", event);
         // launchWebSiteProductWindow(event.product.product_id);
     }
     viewer.onbuythelookwidgetactivate = function(event){
+        top?.postMessage("pub:btl");
         console.log("BTL WIDGET ACTIVATED", event);
         // Replace line below with code to launch your web site's buy-the-look window
         // alert("buyTheLookWidgetActivateHandler, event products: " + event.products);
     }
     viewer.oncustomlinkactivate = function(event) {
+        top?.postMessage("pub:customLink");
         console.log("CUSTOM LINK ACTIVATED", event);
     }
 
