@@ -79,6 +79,10 @@
         //     viewer.resize();
         // }
     }
+
+    viewer.ontoolbarbuttonactivate = function(event) {
+        console.log("TOOLBAR ACTIVATED HOOK", event);
+    }
 	
 	// function launchWebSiteProductWindow(productID){
 	// 	window.__zmags.demandware.quickview.show({url:'/on/demandware.store/Sites-ethanallen-us-Site/en_US/Product-Show?format=ajax&pid='+productID+'&source=quickview', source: "quickview"});
