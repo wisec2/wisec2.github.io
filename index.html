@@ -48,10 +48,19 @@
     var pageturn = false; // Do not alter the hash while pages are still turning.
     // if(window.location.hash != ""){ viewer.gotoPage(window.location.hash.replace("#","")); }
     // window.onhashchange = function(event){ if(pageturn == false){ viewer.gotoPage(window.location.hash.replace("#","")); }}
+    const sendMessage = function(params) {
+        if(!top) {
+            return;
+        }
+
+        const message = { publicatorEvent: true, ...params };
+        top.postMessage(message, "*");
+    }
 
     // This block of code updates the URL when pages are turned.
     viewer.oncurrentpageschange = function(event){
         console.log("CURRENT PAGES CHANGED", event);
+        sendMessage({ firstPage: event.firstPage, lastPage: event.lastPage });
         // viewer.getCurrentPages(function(data){
         //     // debugger;
         //     pageturn = true; // Pages currently turning.
@@ -59,29 +68,10 @@
         //     window.location.hash = data.firstPage;
         // });
     }
-	
-    var viewerStyle = "";
-    function toolbarButtonActivateHandler(event){
-        console.log("TOOLBAR ACTIVATED", event);
-        // if (event.buttonID === "fullscreen"){
-        //     var viewerDiv = document.getElementById("myViewerContent");
-        //     if(viewerStyle == ""){
-        //         document.body.style.overflow = "hidden";
-        //         viewerStyle = viewerDiv.style.cssText;
-        //         viewerDiv.style.cssText = "position:fixed; top:0px; left:0px; height:100%; width:100%; z-index:9001;";
-        //     }
-        //     else{
-        //         document.body.style.overflow = "auto";
-        //         viewerDiv.style.cssText = viewerStyle;
-        //         viewerStyle = "";
-        //     }
-
-        //     viewer.resize();
-        // }
-    }
 
     viewer.ontoolbarbuttonactivate = function(event) {
         console.log("TOOLBAR ACTIVATED HOOK", event);
+        sendMessage({ button: event.buttonID });
     }
 	
 	// function launchWebSiteProductWindow(productID){
@@ -89,22 +79,21 @@
 	// }
     
     viewer.onproductlinkactivate = function(event){
-        top?.postMessage("pub:productLink");
-        // launchWebSiteProductWindow(event.product.product_id);
+        console.log("PRODUCT LINK ACTIVATED", event);
     }
     viewer.onproductwidgetactivate = function(event){
-        top?.postMessage("pub:productWidget");
         console.log("PRODUCT WIDGET ACTIVATED", event);
-        // launchWebSiteProductWindow(event.product.product_id);
+        const productId = event.product.product_id || event.defaultProduct.product_id;
+        if(productId) {
+            sendMessage({ product: productId });
+        }
     }
     viewer.onbuythelookwidgetactivate = function(event){
-        top?.postMessage("pub:btl");
         console.log("BTL WIDGET ACTIVATED", event);
         // Replace line below with code to launch your web site's buy-the-look window
         // alert("buyTheLookWidgetActivateHandler, event products: " + event.products);
     }
     viewer.oncustomlinkactivate = function(event) {
-        top?.postMessage("pub:customLink");
         console.log("CUSTOM LINK ACTIVATED", event);
     }
 
