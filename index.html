@@ -61,7 +61,7 @@
 	
     var viewerStyle = "";
     function toolbarButtonActivateHandler(event){
-        console.log("TOOLBAR ACTIVATED");
+        console.log("TOOLBAR ACTIVATED", event);
         if (event.buttonID === "fullscreen"){
             var viewerDiv = document.getElementById("myViewerContent");
             if(viewerStyle == ""){
@@ -84,16 +84,20 @@
 	// }
     
     viewer.onproductlinkactivate = function(event){
-        console.log("PRODUCT LINK ACTIVATED");
+        console.log("PRODUCT LINK ACTIVATED", event);
         // launchWebSiteProductWindow(event.product.product_id);
     }
     viewer.onproductwidgetactivate = function(event){
-        console.log("PRODUCT WIDGET ACTIVATED");
+        console.log("PRODUCT WIDGET ACTIVATED", event);
         // launchWebSiteProductWindow(event.product.product_id);
     }
     viewer.onbuythelookwidgetactivate = function(event){
+        console.log("BTL WIDGET ACTIVATED", event);
         // Replace line below with code to launch your web site's buy-the-look window
-        alert("buyTheLookWidgetActivateHandler, event products: " + event.products);
+        // alert("buyTheLookWidgetActivateHandler, event products: " + event.products);
+    }
+    viewer.oncustomlinkactivate = function(event) {
+        console.log("CUSTOM LINK ACTIVATED", event);
     }
 
 </script>
