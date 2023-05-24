@@ -60,7 +60,10 @@
     // This block of code updates the URL when pages are turned.
     viewer.oncurrentpageschange = function(event){
         console.log("CURRENT PAGES CHANGED", event);
-        sendMessage("pageChange", { firstPage: event.firstPage, lastPage: event.lastPage });
+        const pages = event.pages;
+        if(pages) {
+            sendMessage("pageChange", { firstPage: event.pages.firstPage, lastPage: event.pages.lastPage });
+        }
         // viewer.getCurrentPages(function(data){
         //     // debugger;
         //     pageturn = true; // Pages currently turning.
