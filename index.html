@@ -52,7 +52,7 @@
             return;
         }
 
-        const message = { publicatorEvent: true, data: { ...params } };
+        const message = { publicatorEvent: true, type: type, data: { ...params } };
         console.log("Sending Message", message);
         top.postMessage(message, "*");
     }
