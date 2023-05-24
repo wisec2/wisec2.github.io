@@ -63,21 +63,21 @@
     var viewerStyle = "";
     function toolbarButtonActivateHandler(event){
         console.log("TOOLBAR ACTIVATED", event);
-        if (event.buttonID === "fullscreen"){
-            var viewerDiv = document.getElementById("myViewerContent");
-            if(viewerStyle == ""){
-                document.body.style.overflow = "hidden";
-                viewerStyle = viewerDiv.style.cssText;
-                viewerDiv.style.cssText = "position:fixed; top:0px; left:0px; height:100%; width:100%; z-index:9001;";
-            }
-            else{
-                document.body.style.overflow = "auto";
-                viewerDiv.style.cssText = viewerStyle;
-                viewerStyle = "";
-            }
+        // if (event.buttonID === "fullscreen"){
+        //     var viewerDiv = document.getElementById("myViewerContent");
+        //     if(viewerStyle == ""){
+        //         document.body.style.overflow = "hidden";
+        //         viewerStyle = viewerDiv.style.cssText;
+        //         viewerDiv.style.cssText = "position:fixed; top:0px; left:0px; height:100%; width:100%; z-index:9001;";
+        //     }
+        //     else{
+        //         document.body.style.overflow = "auto";
+        //         viewerDiv.style.cssText = viewerStyle;
+        //         viewerStyle = "";
+        //     }
 
-            viewer.resize();
-        }
+        //     viewer.resize();
+        // }
     }
 	
 	// function launchWebSiteProductWindow(productID){
