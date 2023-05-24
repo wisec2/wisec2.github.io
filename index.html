@@ -2,14 +2,14 @@
 <html>
 <head>
     <!-- Google tag (gtag.js) -->
-    <!-- <script async src="https://www.googletagmanager.com/gtag/js?id=G-W8HW0NL52L"></script>
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-W8HW0NL52L"></script>
     <script>
         window.dataLayer = window.dataLayer || [];
         function gtag(){dataLayer.push(arguments);}
         gtag('js', new Date());
 
         gtag('config', 'G-W8HW0NL52L');
-    </script> -->
+    </script>
     <!-------------------------->
 
     <meta charset="utf-8">
@@ -52,7 +52,8 @@
             return;
         }
 
-        const message = { publicatorEvent: true, ...params };
+        console.log("Sending Message", message);
+        const message = { publicatorEvent: true, data: { ...params } };
         top.postMessage(message, "*");
     }
 
