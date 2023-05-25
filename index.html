@@ -38,10 +38,13 @@
 <script>
 
     var viewer = new com.zmags.api.Viewer();
-    viewer.setPublicationID("e8e1983d");
+    var publicationId = "e8e1983d";
+    viewer.setPublicationId(publicationId);
     // viewer.setPublicationID("84f1f879");
     console.log("viewer obj", com.zmags.api.Viewer);
     viewer.setParentElementID("myViewerContent");
+    var publicationName = "";
+    viewer.getPublicationTitle((title) => publicationName = title);
     viewer.show();
 	
 	// This block of code displays the page specified in the URL.
@@ -53,7 +56,13 @@
             return;
         }
 
-        const message = { publicatorEvent: true, type: type, data: { ...params } };
+        const message = {
+            publicatorEvent: true,
+            type: type,
+            data: { ...params },
+            title: publicationName,
+            id: publicationId
+        };
         console.log("Sending Message", message);
         top.postMessage(message, "*");
     }
