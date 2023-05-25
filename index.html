@@ -39,7 +39,7 @@
 
     var viewer = new com.zmags.api.Viewer();
     var publicationId = "e8e1983d";
-    viewer.setPublicationId(publicationId);
+    viewer.setPublicationID(publicationId);
     // viewer.setPublicationID("84f1f879");
     console.log("viewer obj", com.zmags.api.Viewer);
     viewer.setParentElementID("myViewerContent");
@@ -63,6 +63,7 @@
             title: publicationName,
             id: publicationId
         };
+
         console.log("Sending Message", message);
         top.postMessage(message, "*");
     }
