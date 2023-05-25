@@ -43,7 +43,7 @@
     // viewer.setPublicationID("84f1f879");
     console.log("viewer obj", com.zmags.api.Viewer);
     viewer.setParentElementID("myViewerContent");
-    var publicationName = "";
+    var publicationTitle = "";
     viewer.show();
 	
 	// This block of code displays the page specified in the URL.
@@ -55,11 +55,15 @@
             return;
         }
 
+        if(!publicationTitle || publicationTitle === "") {
+            return;
+        }
+
         const message = {
             publicatorEvent: true,
             type: type,
             data: { ...params },
-            title: publicationName,
+            title: publicationTitle,
             id: publicationId
         };
 
@@ -70,7 +74,7 @@
     viewer.onviewerloaded = function(event) {
         console.log("VIEWER LOADED", event);
         viewer.getPublicationTitle((title) => {
-            publicationName = title;
+            publicationTitle = title.publicationTitle;
         });
     };
 
