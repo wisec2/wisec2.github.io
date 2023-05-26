@@ -43,7 +43,6 @@
     viewer.setParentElementID("myViewerContent");
     var publicationTitle = "";
     viewer.addEventListener(com.zmags.api.Viewer.CUSTOM_LINK_ACTIVATE, handleCustomLink);
-    viewer.addEventListener(com.zmags.api.Viewer.PRODUCT_LINK_ACTIVATE, handleProductLink);
     viewer.show();
 	
     const sendMessage = function(type, params) {
@@ -92,12 +91,15 @@
         }
     }
 
-    function handleCustomLink(event) {
-        console.log("CUSTOM LINK", event);
+    viewer.onproductlinkactivate = function(event) {
+        const productId = event.product.product_id || event.defaultProduct.product_id;
+        if(productId) {
+            sendMessage("productLink", { product: productId });
+        }
     }
 
-    function handleProductLink(event) {
-        console.log("PRODUCT LINK", event);
+    function handleCustomLink(event) {
+        console.log("CUSTOM LINK", event);
     }
 </script>
     <a href="/page2.html">Page 2!</a>
