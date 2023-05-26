@@ -37,12 +37,13 @@
 <div id="myViewerContent" style="width: 800px; height: 600px;"></div>
 <script>
     var viewer = new com.zmags.api.Viewer();
-    var publicationId = "e8e1983d";
+    // var publicationId = "e8e1983d";
+    var publicationId = "85b9bb79";
     viewer.setPublicationID(publicationId);
     viewer.setParentElementID("myViewerContent");
     var publicationTitle = "";
-    // viewer.addEventListener(com.zmags.api.Viewer.CUSTOM_LINK_ACTIVATE, handleCustomLink);
-    // viewer.addEventListener(com.zmags.api.Viewer.PRODUCT_LINK_ACTIVATE, handleProductLink);
+    viewer.addEventListener(com.zmags.api.Viewer.CUSTOM_LINK_ACTIVATE, handleCustomLink);
+    viewer.addEventListener(com.zmags.api.Viewer.PRODUCT_LINK_ACTIVATE, handleProductLink);
     viewer.show();
 	
     const sendMessage = function(type, params) {
