@@ -36,20 +36,15 @@
     <script type="text/javascript" src="https://secure.api.viewer.zmags.com/viewer/viewer.js"></script>
 <div id="myViewerContent" style="width: 800px; height: 600px;"></div>
 <script>
-
     var viewer = new com.zmags.api.Viewer();
     var publicationId = "e8e1983d";
     viewer.setPublicationID(publicationId);
-    // viewer.setPublicationID("84f1f879");
-    console.log("viewer obj", com.zmags.api.Viewer);
     viewer.setParentElementID("myViewerContent");
     var publicationTitle = "";
+    viewer.addEventListener(com.zmags.api.Viewer.CUSTOM_LINK_ACTIVATE, handleCustomLink);
+    viewer.addEventListener(com.zmags.api.Viewer.PRODUCT_LINK_ACTIVATE, handleProductLink);
     viewer.show();
 	
-	// This block of code displays the page specified in the URL.
-    var pageturn = false; // Do not alter the hash while pages are still turning.
-    // if(window.location.hash != ""){ viewer.gotoPage(window.location.hash.replace("#","")); }
-    // window.onhashchange = function(event){ if(pageturn == false){ viewer.gotoPage(window.location.hash.replace("#","")); }}
     const sendMessage = function(type, params) {
         if(!top) {
             return;
@@ -72,55 +67,37 @@
     }
 
     viewer.onviewerloaded = function(event) {
-        console.log("VIEWER LOADED", event);
-        viewer.getPublicationTitle((title) => {
+        viewer.getPublicationTitle(function (title) {
             publicationTitle = title.publicationTitle;
         });
     };
 
     // This block of code updates the URL when pages are turned.
     viewer.oncurrentpageschange = function(event){
-        console.log("CURRENT PAGES CHANGED", event);
         const pages = event.pages;
         if(pages) {
             sendMessage("pageChange", { firstPage: event.pages.firstPage, lastPage: event.pages.lastPage });
         }
-        // viewer.getCurrentPages(function(data){
-        //     // debugger;
-        //     pageturn = true; // Pages currently turning.
-        //     window.setTimeout(function(){ pageturn = false; }, 100);
-        //     window.location.hash = data.firstPage;
-        // });
     }
 
     viewer.ontoolbarbuttonactivate = function(event) {
-        console.log("TOOLBAR ACTIVATED HOOK", event);
         sendMessage("toolbar", { button: event.buttonID });
     }
-	
-	// function launchWebSiteProductWindow(productID){
-	// 	window.__zmags.demandware.quickview.show({url:'/on/demandware.store/Sites-ethanallen-us-Site/en_US/Product-Show?format=ajax&pid='+productID+'&source=quickview', source: "quickview"});
-	// }
-    
-    viewer.onproductlinkactivate = function(event){
-        console.log("PRODUCT LINK ACTIVATED", event);
-    }
+
     viewer.onproductwidgetactivate = function(event){
-        console.log("PRODUCT WIDGET ACTIVATED", event);
         const productId = event.product.product_id || event.defaultProduct.product_id;
         if(productId) {
             sendMessage("productWidget", { product: productId });
         }
     }
-    viewer.onbuythelookwidgetactivate = function(event){
-        console.log("BTL WIDGET ACTIVATED", event);
-        // Replace line below with code to launch your web site's buy-the-look window
-        // alert("buyTheLookWidgetActivateHandler, event products: " + event.products);
-    }
-    viewer.oncustomlinkactivate = function(event) {
-        console.log("CUSTOM LINK ACTIVATED", event);
+
+    function handleCustomLink(event) {
+        console.log("CUSTOM LINK", event);
     }
 
+    function handleProductLink(event) {
+        console.log("PRODUCT LINK", event);
+    }
 </script>
     <a href="/page2.html">Page 2!</a>
     <!-- <script type="text/javascript" src="https://cas-stage.zma.gs/60da01be15ae551c007b057f/ssr/experiences/64500f11e54c792e2747dbd1/init.js"></script> -->
